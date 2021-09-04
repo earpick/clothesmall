@@ -3,32 +3,31 @@
     <nav-bar class="home-nav">
       <div class="center" slot="center">购物车</div>
     </nav-bar>
+    <home-swiper :swiperItemData="banner"/>
   </div>
 </template>
 
 <script>
-  import NavBar from 'components/common/navbar/NavBar';
+  import NavBar from "components/common/navbar/NavBar";
+  import HomeSwiper from "views/home/childComps/HomeSwiper";
+
   import {getHomeMultidata} from "network/home";
+
   export default {
     name: "Home",
     components: {
-      NavBar
+      NavBar,
+      HomeSwiper
     },
     created() {
       getHomeMultidata().then(result => {
-        console.log(result);
-        this.banner = result.data.data.banner;
-        this.dKeyword = result.data.data.dKeyword;
-        this.keywords = result.data.data.keywords;
-        this.recommend = result.data.data.recommend;
+        console.log(result)
+        this.banner = result.data.data.banner.list;
       })
     },
     data() {
       return {
-        banner: [],
-        dKeyword: [],
-        keywords: [],
-        recommend: []
+        banner: []
       }
     }
   }
