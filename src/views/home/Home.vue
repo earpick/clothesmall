@@ -7,12 +7,14 @@
     <recommend-view :recommendItemData="recommend"/>
     <feature-view/>
     <tab-control :homeTitle="['修行','新款','精选']"/>
+    <goods-list :goodsData="goods.pop"/>
   </div>
 </template>
 
 <script>
   import NavBar from "components/common/navbar/NavBar";
-  import tabControl from "components/content/tabControl/tabControl";
+  import TabControl from "components/content/tabControl/TabControl";
+  import GoodsList from "components/content/goods/GoodsList";
 
   import HomeSwiper from "views/home/childComps/HomeSwiper";
   import RecommendView from "views/home/childComps/RecommendView";
@@ -24,7 +26,8 @@
     name: "Home",
     components: {
       NavBar,
-      tabControl,
+      TabControl,
+      GoodsList,
       HomeSwiper,
       RecommendView,
       FeatureView
