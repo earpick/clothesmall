@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <goods-list-item v-for="item in goodsData.list" :goodsItem="item"/>
+    <goods-list-item v-for="(item,index) in singlePageGoodsData" :key="index" :goodsItem="item"/>
   </div>
 </template>
 
@@ -18,6 +18,11 @@ export default {
       default () {
         return [];
       }
+    }
+  },
+  computed: {
+    singlePageGoodsData() {
+      return this.goodsData.list;
     }
   }
 }
