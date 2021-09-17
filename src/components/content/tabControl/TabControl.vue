@@ -26,6 +26,7 @@ export default {
   methods: {
     discoloration(index) {
       this.currentIndex = index;
+      this.$emit("tab-click-title",index);
     }
   }
 
@@ -63,5 +64,6 @@ export default {
   .tab-control {
     position: sticky;
     top: 44px;
+    z-index: 9;
   }
 </style>

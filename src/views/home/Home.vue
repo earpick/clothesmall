@@ -6,8 +6,11 @@
     <home-swiper :swiperItemData="banner"/>
     <recommend-view :recommendItemData="recommend"/>
     <feature-view/>
-    <tab-control :homeTitle="['修行','新款','精选']"/>
-    <goods-list :goodsData="goods.pop"/>
+    <tab-control
+      :homeTitle="['流行','新款','精选']"
+      @tab-click-title="titleNumber"
+    />
+    <goods-list :goodsData="showGoods"/>
   </div>
 </template>
 
@@ -40,16 +43,37 @@
           'pop': {page: 0, list: []},
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []}
-        }
+        },
+        currentType: 'pop'
       }
     },
     created() {
-      this.getHomeMultidata()
-      this.getHomeGoodsdata('pop')
-      this.getHomeGoodsdata('new')
-      this.getHomeGoodsdata('sell')
+      this.getHomeMultidata();
+      this.getHomeGoodsdata('pop');
+      this.getHomeGoodsdata('new');
+      this.getHomeGoodsdata('sell');
     },
     methods: {
+      /**
+       *  事件监听相关方法
+       */
+      titleNumber(index) {
+        switch (index) {
+          case 0:
+            this.currentType = 'pop'
+            break
+          case 1:
+            this.currentType = 'new'
+            break
+          case 2:
+            this.currentType = 'sell'
+            break
+        }
+
+      },
+      /**
+       * 网络请求相关方法
+       */
       getHomeMultidata() {
         getHomeMultidata().then(result => {
           console.log(result);
@@ -58,14 +82,19 @@
         })
       },
       getHomeGoodsdata(type) {
-        const page = this.goods[type].page + 1
+        const page = this.goods[type].page + 1;
         getHomeGoodsdata(type,page).then(result => {
-          const list = result.data.data.list
+          const list = result.data.data.list;
           for (let item of list) {
             this.goods[type].list.push(item)
           }
-          this.goods[type].page += 1
+          this.goods[type].page += 1;
         })
+      }
+    },
+    computed: {
+      showGoods() {
+        return this.goods[this.currentType];
       }
     }
   }
@@ -87,4 +116,5 @@
   .center {
     color: #f6f6f6;
   }
+
 </style>
